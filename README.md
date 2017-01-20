@@ -113,12 +113,10 @@ https://spring.io/guides/gs/spring-boot/
 
 Das ist der erste Guide, den ich mir genauer angesehen habe. Grundsätzlich geht er nicht viel weiter, als das Getting-Started Beispiel. Zwei Punkte sind allerdings neu - und nicht weniger spannend!
 
-- Tests
-Die Helferlein von Spring erleichtern das Schreiben von Tests ungemein, finde ich. Details hierzu kommen in einem separaten Guide.
+- Tests! Die Helferlein von Spring erleichtern das Schreiben von Tests ungemein, finde ich. Details hierzu kommen in einem separaten Guide.
   - [Unit-Test](https://github.com/stphngrtz/hello-spring-boot/tree/master/src/test/java/de/stphngrtz/controllers/GreetingsControllerTest.java) mit provisioniertem Application Context
   - [Integrationstest](https://github.com/stphngrtz/hello-spring-boot/tree/master/src/test/java/de/stphngrtz/controllers/GreetingsControllerIT.java) für die vollständige Anwendung
-- [Actuator](http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#production-ready)
-Unter dem Titel *"production-ready features"* kommt über den Actuator ein sehr interessantes Feature-Set zum Monitoring bzw. Verwalten in die Anwendung. Auch hierzu gibt es einen separaten Guide.
+- [Actuator](http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#production-ready)! Unter dem Titel *"production-ready features"* kommt über den Actuator ein sehr interessantes Feature-Set zum Monitoring bzw. Verwalten in die Anwendung. Auch hierzu gibt es einen separaten Guide.
 
 ## TODO
 - https://spring.io/guides/gs/rest-service/
