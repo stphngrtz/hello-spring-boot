@@ -25,6 +25,8 @@ Starters sind interessant. Man definiert einen solchen als Maven Parent bzw. Dep
 
 Wie man sieht, `<version>` entfällt, dank sei den *"blessed"* Dependencies ;)
 
+**Offizielle** Starter fangen übrigens immer mit `spring-boot-starter-*` an. Third Party Starter sollen, laut Dokumentation, einen Prefix bekommen, zB. `stphngrtz-spring-boot-starter-*`.
+
 ## Hello World
 Für ein Hello-World-Beispiel reicht eine `pom.xml` nicht aus, wir brauchen noch Code!
 
@@ -85,7 +87,35 @@ Auch hier kommt das das Spring Ecosystem zu Hilfe. Eine Mini-Build-Konfiguration
 
 Anschließend lässt sich das Hello-World-Beispiel via `java -jar target/hello-spring-boot-1.0-SNAPSHOT.jar` starten.
 
+## Java 8 bzw. "Wie überschreibt man Defaults aus dem Starter?"
+Der Starter des 1.4.3 Release setzt die Java Version auf 1.6. Ich möchte die 7er und 8er Features aber nicht missen, deshalb muss das dringend geändert werden.
+
+```
+<properties>
+    <java.version>1.8</java.version>
+</properties>
+```
+
+Anschließend lassen sich auch Java 8 Features nutzen. Zum Beispiel, um einen absoluten Blödsinn zu machen ;)
+
+```
+@RequestMapping("/")
+String home() {
+    return ((Function<String, String>) x -> "Hello " + x).apply("World");
+}
+```
+
 ## Spring Guides
 Das Getting-Started endet hier bereits, allerdings scheint man bei Spring erkannt zu haben, wie wertvoll HowTo-Guides sind. Neben der Dokumentation gibt es einen separaten Bereich für [Guides](https://spring.io/guides/), die auf den ersten Blick sehr interessant aussehen.
 
-## ...
+## Building an Application with Spring Boot
+https://spring.io/guides/gs/spring-boot/
+
+Das ist der erste Guide, den ich mir genauer angesehen habe. Grundsätzlich geht er nicht viel weiter, als das Getting-Started Beispiel. Zwei Punkte sind allerdings neu - und nicht weniger spannend!
+
+- Tests
+Die Helferlein von Spring erleichtern das Schreiben von Tests ungemein, finde ich. Details hierzu kommen in einem separaten Guide.
+  - Unit-Test mit provisioniertem Application Context
+  - Integrationstest für die vollständige Anwendung
+- [Actuator](http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#production-ready)
+Unter dem Titel *"production-ready features"* kommt über den Actuator ein sehr interessantes Feature-Set zum Monitoring bzw. Verwalten in die Anwendung. Auch hierzu gibt es einen separaten Guide.

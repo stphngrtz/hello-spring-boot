@@ -1,20 +1,33 @@
 package de.stphngrtz;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
-@RestController
-@EnableAutoConfiguration
+import java.util.Arrays;
+
+@SpringBootApplication
 public class App {
-
-    @RequestMapping("/")
-    String home() {
-        return "Hello World";
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
+    }
+
+    /**
+     * @see <a href="https://spring.io/guides/gs/spring-boot/">Building an Application with Spring Boot</a>
+     */
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
+            System.out.println("Let's inspect the beans provided by Spring Boot:");
+
+            String[] beanDefinitionNames = ctx.getBeanDefinitionNames();
+            Arrays.sort(beanDefinitionNames);
+            for (String beanDefinitionName : beanDefinitionNames) {
+                System.out.println(beanDefinitionName);
+            }
+        };
     }
 }

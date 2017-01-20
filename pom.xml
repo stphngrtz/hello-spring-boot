@@ -16,10 +16,32 @@
     <name>hello-spring-boot</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
     <dependencies>
+        <!--
+        https://spring.io/guides/gs/spring-boot/
+        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--
+        https://spring.io/guides/gs/spring-boot/
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--
+        https://spring.io/guides/gs/spring-boot/
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
