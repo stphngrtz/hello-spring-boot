@@ -115,7 +115,25 @@ Das ist der erste Guide, den ich mir genauer angesehen habe. Grundsätzlich geht
 
 - Tests
 Die Helferlein von Spring erleichtern das Schreiben von Tests ungemein, finde ich. Details hierzu kommen in einem separaten Guide.
-  - Unit-Test mit provisioniertem Application Context
-  - Integrationstest für die vollständige Anwendung
+  - [Unit-Test](https://github.com/stphngrtz/hello-spring-boot/tree/master/src/test/java/de/stphngrtz/controllers/GreetingsControllerTest.java) mit provisioniertem Application Context
+  - [Integrationstest](https://github.com/stphngrtz/hello-spring-boot/tree/master/src/test/java/de/stphngrtz/controllers/GreetingsControllerIT.java) für die vollständige Anwendung
 - [Actuator](http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#production-ready)
 Unter dem Titel *"production-ready features"* kommt über den Actuator ein sehr interessantes Feature-Set zum Monitoring bzw. Verwalten in die Anwendung. Auch hierzu gibt es einen separaten Guide.
+
+## TODO
+- https://spring.io/guides/gs/rest-service/
+- https://spring.io/guides/gs/rest-service-cors/
+- https://spring.io/guides/gs/actuator-service/
+- https://spring.io/guides/gs/testing-web/
+- https://spring.io/guides/gs/consuming-rest/
+- https://spring.io/guides/gs/rest-hateoas/
+- https://spring.io/guides/gs/centralized-configuration/
+- https://spring.io/guides/gs/scheduling-tasks/
+- https://spring.io/guides/gs/securing-web/
+- https://spring.io/guides/gs/routing-and-filtering/
+- https://spring.io/guides/gs/accessing-mongodb-data-rest/
+- https://spring.io/guides/gs/spring-boot-docker/
+- https://spring.io/guides/gs/client-side-load-balancing/
+- https://spring.io/guides/gs/service-registration-and-discovery/
+- https://spring.io/guides/gs/circuit-breaker/
+- https://spring.io/guides/tutorials/bookmarks/
