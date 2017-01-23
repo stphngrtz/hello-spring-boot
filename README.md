@@ -118,8 +118,19 @@ Das ist der erste Guide, den ich mir genauer angesehen habe. Grundsätzlich geht
   - [Integrationstest](https://github.com/stphngrtz/hello-spring-boot/tree/master/src/test/java/de/stphngrtz/controllers/GreetingsControllerIT.java) für die vollständige Anwendung
 - [Actuator](http://docs.spring.io/spring-boot/docs/1.4.3.RELEASE/reference/htmlsingle/#production-ready)! Unter dem Titel *"production-ready features"* kommt über den Actuator ein sehr interessantes Feature-Set zum Monitoring bzw. Verwalten in die Anwendung. Auch hierzu gibt es einen separaten Guide.
 
+## Building a RESTful Web Service
+https://spring.io/guides/gs/rest-service/
+
+Der RESTful Web Service Guide bringt einen nicht sonderlich viel weiter als der Getting Started Guide. Neu sind lediglich die Parameter im `@RequestMapping` sowie `@RequestParam`.
+
+```
+@RequestMapping(value = "/greeting", method = RequestMethod.GET)
+public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    return new Greeting(counter.incrementAndGet(), String.format("Hello, %s!", name));
+}
+```
+
 ## TODO
-- https://spring.io/guides/gs/rest-service/
 - https://spring.io/guides/gs/rest-service-cors/
 - https://spring.io/guides/gs/actuator-service/
 - https://spring.io/guides/gs/testing-web/

@@ -36,7 +36,7 @@ public class GreetingsControllerIT {
     }
 
     @Test
-    public void getGreetings() throws Exception {
+    public void getIndex() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
         assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
     }

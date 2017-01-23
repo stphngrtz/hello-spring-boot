@@ -10,12 +10,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @see <a href="https://spring.io/guides/gs/spring-boot/">Building an Application with Spring Boot</a>
+ * @see <a href="https://spring.io/guides/gs/rest-service/">Building a RESTful Web Service</a>
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,10 +30,28 @@ public class GreetingsControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    private final AtomicLong counter = new AtomicLong();
+
     @Test
-    public void getGreeting() throws Exception {
+    public void getIndex() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("Greetings from Spring Boot!")));
+    }
+
+    @Test
+    public void getDefaultGreeting() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/greeting").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", any(Integer.class)))
+                .andExpect(jsonPath("$.content", equalTo("Hello, World!")));
+    }
+
+    @Test
+    public void getPersonalizedGreeting() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/greeting?name=Stephan").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", any(Integer.class)))
+                .andExpect(jsonPath("$.content", equalTo("Hello, World!")));
     }
 }
