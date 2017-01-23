@@ -130,12 +130,38 @@ public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") S
 }
 ```
 
+## Enabling Cross Origin Requests for a RESTful Web Service
+https://spring.io/guides/gs/rest-service-cors/
+
+`@CrossOrigin` ist alles was man braucht um CORS zu aktivieren. Standardmäßig sind alle *"Origins"*, alle Header und die in `@RequestMapping` definierte HTTP Method erlaubt. Über Parameter der Annotation lässt sich das konfigurieren.
+
+```
+@CrossOrigin(origins = "http://localhost:9000")
+@RequestMapping(value = "/greeting", method = RequestMethod.GET)
+public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    return new Greeting(counter.incrementAndGet(), String.format("Hello, %s!", name));
+}
+```
+
+Will man CORS nicht für jeden Request einzeln aktivieren, dann geht das wie folgt.
+
+```
+@Bean
+public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**").allowedOrigins("http://localhost:9000");
+        }
+    };
+}
+```
+
 ## TODO
-- https://spring.io/guides/gs/rest-service-cors/
-- https://spring.io/guides/gs/actuator-service/
 - https://spring.io/guides/gs/testing-web/
-- https://spring.io/guides/gs/consuming-rest/
 - https://spring.io/guides/gs/rest-hateoas/
+- https://spring.io/guides/gs/actuator-service/
+- https://spring.io/guides/gs/consuming-rest/
 - https://spring.io/guides/gs/centralized-configuration/
 - https://spring.io/guides/gs/scheduling-tasks/
 - https://spring.io/guides/gs/securing-web/
