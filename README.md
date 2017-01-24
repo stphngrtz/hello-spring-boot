@@ -224,7 +224,20 @@ public Greeting greeting(@RequestParam String name) {
 ## Consuming a RESTful Web Service
 https://spring.io/guides/gs/consuming-rest/
 
+Aus Java einen RESTful Web Service aufzurufen ist unnötig kompliziert. Normalerweise. Glücklicherweise gibt es die ein oder andere Library, die einem das Leben erleichtert. Mein bisheriger Favorit war [Feign](https://github.com/OpenFeign/feign). Spring bringt mit `RestTemplate` auch sowas mit.
 
+```
+Quote quote = new RestTemplate().getForObject("http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+```
+
+Das war es schon. Schön einfach. `POST`, `PUT`, etc. sieht ähnlich aus. Will man das Template einmalig konfigurieren, bietet es sich an, den `RestTemplateBuilder` in Kombination mit `@Bean` zu nutzen. Anschließend steht `RestTemplate` für Injection zur Verfügung.
+
+```
+@Bean
+public RestTemplate restTemplate(RestTemplateBuilder builder) {
+    return builder.build();
+}
+```
 
 ## TODO
 - https://spring.io/guides/gs/centralized-configuration/
