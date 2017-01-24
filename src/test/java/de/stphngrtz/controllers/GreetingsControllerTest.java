@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @see <a href="https://spring.io/guides/gs/spring-boot/">Building an Application with Spring Boot</a>
  * @see <a href="https://spring.io/guides/gs/rest-service/">Building a RESTful Web Service</a>
+ * @see <a href="https://spring.io/guides/gs/rest-hateoas/">Building a Hypermedia-Driven RESTful Web Service</a>
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,6 +53,14 @@ public class GreetingsControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/greeting?name=Stephan").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", any(Integer.class)))
-                .andExpect(jsonPath("$.content", equalTo("Hello, World!")));
+                .andExpect(jsonPath("$.content", equalTo("Hello, Stephan!")));
+    }
+
+    @Test
+    public void getPersonalizedGreetingWithHATEOAS() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/greetingWithHATEOAS?name=Stephan").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", equalTo("Hello, Stephan!")))
+                .andExpect(jsonPath("$._links.self.href", equalTo("http://localhost/greetingWithHATEOAS?name=Stephan")));
     }
 }

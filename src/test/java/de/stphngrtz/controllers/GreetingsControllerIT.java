@@ -1,9 +1,11 @@
 package de.stphngrtz.controllers;
 
+import com.jayway.jsonpath.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -25,6 +27,9 @@ public class GreetingsControllerIT {
     @LocalServerPort
     private int port;
 
+    @Value("${local.management.port}")
+    private int managementPort;
+
     private URL base;
 
     @Autowired
@@ -39,5 +44,11 @@ public class GreetingsControllerIT {
     public void getIndex() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
         assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
+    }
+
+    @Test
+    public void getHealth() throws Exception {
+        ResponseEntity<String> response = template.getForEntity("http://localhost:" + managementPort + "/health", String.class);
+        assertThat(JsonPath.parse(response.getBody()).read("$.status", String.class), equalTo("UP"));
     }
 }

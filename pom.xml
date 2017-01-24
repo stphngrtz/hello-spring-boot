@@ -29,6 +29,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--
+        https://spring.io/guides/gs/rest-hateoas/
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <!--
         https://spring.io/guides/gs/spring-boot/
         -->
         <dependency>

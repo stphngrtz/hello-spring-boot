@@ -164,9 +164,64 @@ Der Inhalt dieses Guides ist fast vollständig durch den Getting Started Guide a
 
 Neu ist die `@WebMvcTest` Annotation. Wird diese Annotation anstatt `@AutoConfigureMockMvc` genutzt, werden Klassen mit `@Component`, `@Service` oder `@Repository` nicht geladen. Ob das so sinnvoll ist weiß ich (noch) nicht.
 
+## Building a Hypermedia-Driven RESTful Web Service
+https://spring.io/guides/gs/rest-hateoas/
+
+Spring hat einen Starter für HATEOAS an Bord.
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-hateoas</artifactId>
+</dependency>
+```
+
+Die wesentlichen Inhalte der Guides sind relativ schnell erklärt. Zuerst müssen Entities von einer Basisklasse ableiten.
+
+```
+public class GreetingWithHATEOAS extends ResourceSupport {
+    ...
+}
+```
+
+Anschließend können, mit Unterstützung diverser statischer Hilfsmethoden, Links auf die Entity hinzugefügt werden. Im Guide wird das mit einer Referenz auf die Entity selbst dargestellt.
+
+```
+public HttpEntity<GreetingWithHATEOAS> greetingWithHATEOAS(@RequestParam String name) {
+    GreetingWithHATEOAS greeting = new GreetingWithHATEOAS(String.format("Hello, %s!", name));
+    greeting.add(linkTo(methodOn(GreetingsController.class).greetingWithHATEOAS(name)).withSelfRel());
+    ...
+}
+```
+
+## Building a RESTful Web Service with Spring Boot Actuator
+https://spring.io/guides/gs/actuator-service/
+
+Der Guide geht leider so gut wie gar nicht auf Actuator ein. Es wird lediglich erwähnt, wie man den Actuator ins Projekt einbindet und wie man den Businesscode und Actuator-Funktionalität auf unterschiedlichen Ports laufen lassen kann. Hierzu muss in der `application.properties` folgendes Eintragen:
+
+```
+server.port: 9000
+management.port: 9001
+```
+
+Wie man eine solche Port-Konfiguration dynamisch in Tests ausliest wird auch beschrieben. Siehe dafür [GreetingsControllerIT](src/test/java/de/stphngrtz/controllers/GreetingsControllerIT.java).
+
+Details zu Actuator findet man in der [Dokumentation](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready). Diese beginnt mit einer Liste der Endpoints, welche einen guten Eindruck davon vermitteln, was der Actuator alles an Features mitbringt. `/health` kennen wir aus den Guides schon, `/metrics` habe ich im Folgenden noch grob angesehen.
+
+In den Metrics werden automatisch diverse Systemmetriken ausgegeben. Dabei handelt es sich anscheinend immer um den dann aktuellen Stand. Eigene Metriken lassen sich sehr einfach hinzufügen.
+
+```
+@Autowired
+private CounterService counterService;
+
+@RequestMapping(value = "/greeting", method = RequestMethod.GET)
+public Greeting greeting(@RequestParam String name) {
+    counterService.increment("greeting");
+    ...
+}
+```
+
 ## TODO
-- https://spring.io/guides/gs/rest-hateoas/
-- https://spring.io/guides/gs/actuator-service/
 - https://spring.io/guides/gs/consuming-rest/
 - https://spring.io/guides/gs/centralized-configuration/
 - https://spring.io/guides/gs/scheduling-tasks/
