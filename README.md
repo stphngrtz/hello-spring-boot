@@ -221,8 +221,12 @@ public Greeting greeting(@RequestParam String name) {
 }
 ```
 
+## Consuming a RESTful Web Service
+https://spring.io/guides/gs/consuming-rest/
+
+
+
 ## TODO
-- https://spring.io/guides/gs/consuming-rest/
 - https://spring.io/guides/gs/centralized-configuration/
 - https://spring.io/guides/gs/scheduling-tasks/
 - https://spring.io/guides/gs/securing-web/

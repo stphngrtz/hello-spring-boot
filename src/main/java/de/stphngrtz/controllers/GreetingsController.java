@@ -23,6 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @see <a href="https://spring.io/guides/gs/rest-service/">Building a RESTful Web Service</a>
  * @see <a href="https://spring.io/guides/gs/rest-service-cors/">Enabling Cross Origin Requests for a RESTful Web Service</a>
  * @see <a href="https://spring.io/guides/gs/rest-hateoas/">Building a Hypermedia-Driven RESTful Web Service</a>
+ * @see <a href="https://spring.io/guides/gs/actuator-service/">Building a RESTful Web Service with Spring Boot Actuator</a>
  */
 @RestController
 public class GreetingsController {
@@ -41,14 +42,11 @@ public class GreetingsController {
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
         counterService.increment("greeting");
-
         return new Greeting(counter.incrementAndGet(), String.format("Hello, %s!", name));
     }
 
     @RequestMapping(value = "/greetingWithHATEOAS", method = RequestMethod.GET)
     public HttpEntity<GreetingWithHATEOAS> greetingWithHATEOAS(@RequestParam(value = "name", required = false, defaultValue = "World") String name) {
-        counterService.increment("greetingWithHATEOAS");
-
         GreetingWithHATEOAS greeting = new GreetingWithHATEOAS(String.format("Hello, %s!", name));
         greeting.add(linkTo(methodOn(GreetingsController.class).greetingWithHATEOAS(name)).withSelfRel());
 
