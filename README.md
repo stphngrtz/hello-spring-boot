@@ -157,8 +157,14 @@ public WebMvcConfigurer corsConfigurer() {
 }
 ```
 
+## Testing the Web Layer
+https://spring.io/guides/gs/testing-web/
+
+Der Inhalt dieses Guides ist fast vollständig durch den Getting Started Guide abgedeckt. Siehe  [GreetingsControllerTest.java](src/test/java/de/stphngrtz/controllers/GreetingsControllerTest.java) und [GreetingsControllerIT.java](src/test/java/de/stphngrtz/controllers/GreetingsControllerIT.java).
+
+Neu ist die `@WebMvcTest` Annotation. Wird diese Annotation anstatt `@AutoConfigureMockMvc` genutzt, werden Klassen mit `@Component`, `@Service` oder `@Repository` nicht geladen. Ob das so sinnvoll ist weiß ich (noch) nicht.
+
 ## TODO
-- https://spring.io/guides/gs/testing-web/
 - https://spring.io/guides/gs/rest-hateoas/
 - https://spring.io/guides/gs/actuator-service/
 - https://spring.io/guides/gs/consuming-rest/
