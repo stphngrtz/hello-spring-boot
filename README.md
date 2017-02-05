@@ -265,12 +265,77 @@ public class GreetingsTask {
 
 Spannend wäre noch zu wissen, wie man Tasks programmatisch anlegen kann. Das wurde im Guide leider nicht angesprochen, ich kann mir aber gut vorstellen, dann Spring dazu in der Lage ist.
 
+## Securing a Web Application
+https://spring.io/guides/gs/securing-web/
+
+Sobald man die `-security` Dependency hinzufügt sind alle Seiten mit Basic-Authentication geschützt.
+
+```
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+Im Rahmen des Guides wird dieser Default soweit geändert, dass eine Login-Seite zwischengeschaltet wird, sobald man einen geschützten Pfad betritt. Für das Rendering der Seiten wird Thymeleaf als Template-Engine benutzt. Auch hierfür wird eine Dependency bereitgestellt.
+
+```
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+
+Folgende Seiten werden mit Hilfe von Thymeleaf erstellt:
+- [home.html](src/main/resources/templates/hello.html)
+- [hello.html](src/main/resources/templates/hello.html)
+- [login.html](src/main/resources/templates/login.html).
+
+Die Navigation dorthin erfolgt nicht automatisch, sondern muss über den folgenden Codeblock definiert werden.
+
+```
+@Configuration
+public class MvcConfig extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/home").setViewName("home");
+        registry.addViewController("/hello").setViewName("hello");
+        registry.addViewController("/login").setViewName("login");
+    }
+}
+```
+
+Das Web-Securiy-Modul wird letztendlich durch `@EnableWebSecurity` aktiviert. Um lediglich den  `/hello` Pfad zu schützen und das Login-Formular unter `/login` bekannt zu machen, wird folgende Konfiguration benötigt.
+
+```
+@Configuration
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .mvcMatchers("/hello").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin().loginPage("/login");
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+    }
+}
+```
+
+
+
 ## TODO
-- https://spring.io/guides/gs/securing-web/
-- https://spring.io/guides/gs/routing-and-filtering/
 - https://spring.io/guides/gs/accessing-mongodb-data-rest/
 - https://spring.io/guides/gs/spring-boot-docker/
 - https://spring.io/guides/gs/centralized-configuration/
+- https://spring.io/guides/gs/routing-and-filtering/
 - https://spring.io/guides/gs/client-side-load-balancing/
 - https://spring.io/guides/gs/service-registration-and-discovery/
 - https://spring.io/guides/gs/circuit-breaker/
