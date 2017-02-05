@@ -17,7 +17,7 @@ public class GreetingsTask {
     private static final Logger log = LoggerFactory.getLogger(GreetingsTask.class);
     private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "0 0 * * * *") // second, minute, hour, day, month, weekday
     private void greet() {
         log.info("Hello World! It is {}", sdf.format(new Date()));
     }
