@@ -239,13 +239,38 @@ public RestTemplate restTemplate(RestTemplateBuilder builder) {
 }
 ```
 
+## Scheduling Tasks
+https://spring.io/guides/gs/scheduling-tasks/
+
+Spring kann auch Tasks. Um das Scheduling grundsätzlich zu aktivieren muss `@EnableScheduling` an die Anwendung dran.
+```
+@SpringBootApplication
+@EnableScheduling
+public class App {
+    ...
+}
+```
+
+Anschließend kann `@Scheduled` im Komponent benutzt werden. Das folgende Beispiel führt die Methode `greet()` alle 5 Sekunden aus. Neben `fixed` gibt es noch weitere Einstellungsmöglichkeiten, zB. auch Cron-Syntax.
+```
+@Component
+public class GreetingsTask {
+    ...
+    @Scheduled(fixedRate = 5000)
+    private void greet() {
+        ...
+    }
+}
+```
+
+Spannend wäre noch zu wissen, wie man Tasks programmatisch anlegen kann. Das wurde im Guide leider nicht angesprochen, ich kann mir aber gut vorstellen, dann Spring dazu in der Lage ist.
+
 ## TODO
-- https://spring.io/guides/gs/centralized-configuration/
-- https://spring.io/guides/gs/scheduling-tasks/
 - https://spring.io/guides/gs/securing-web/
 - https://spring.io/guides/gs/routing-and-filtering/
 - https://spring.io/guides/gs/accessing-mongodb-data-rest/
 - https://spring.io/guides/gs/spring-boot-docker/
+- https://spring.io/guides/gs/centralized-configuration/
 - https://spring.io/guides/gs/client-side-load-balancing/
 - https://spring.io/guides/gs/service-registration-and-discovery/
 - https://spring.io/guides/gs/circuit-breaker/
