@@ -18,7 +18,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/hello").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().loginPage("/login");
+                .formLogin().loginPage("/login")
+                .and()
+                .csrf().disable();
     }
 
     @Override

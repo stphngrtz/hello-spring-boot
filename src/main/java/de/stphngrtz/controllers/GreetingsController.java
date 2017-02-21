@@ -33,11 +33,6 @@ public class GreetingsController {
     @Autowired
     private CounterService counterService;
 
-    @RequestMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
-    }
-
     @CrossOrigin(origins = "http://localhost:9000")
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {

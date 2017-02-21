@@ -329,10 +329,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
+## Accessing MongoDB Data with REST
+https://spring.io/guides/gs/accessing-mongodb-data-rest/
 
+Neuer Guide, neues Feature-Set, neue Dependencies.
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-rest</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+```
+
+Spannend ist, wie Spring mit Repositories umgeht. Man definiert lediglich ein Interface und Spring generiert zur Laufzeit eine passende Implementierung. Da Repository-Methoden typischerweise relativ langweilig sind ist das sicherlich eine gute Idee, interessant wird es, wenn die Repository-Logik über einfache Einschränkungen hinaus geht.
+
+```
+@RepositoryRestResource(collectionResourceRel = "people", path = "people")
+public interface PersonRepository extends MongoRepository<Person, String> {
+    List<Person> findByLastName(@Param("name") String name);
+}
+```
+
+Durch die `@RepositoryRestResource` Annotation wird automatisch ein HATEOAS REST-Endpunkt für die Resource generiert. Auch sehr praktisch.
+
+```
+curl http://localhost:9000/people
+curl -i -X POST -H "Content-Type:application/json" -d "{  \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }" http://localhost:9000/people
+curl http://localhost:9000/people/search
+curl http://localhost:9000/people/search/findByLastName?name=Baggins
+curl -X PUT -H "Content-Type:application/json" -d "{ \"firstName\": \"Bilbo\", \"lastName\": \"Baggins\" }" http://localhost:9000/people/58ac37aabd00332944468cca
+curl -X PATCH -H "Content-Type:application/json" -d "{ \"firstName\": \"Bilbo Jr.\" }" http://localhost:9000/people/58ac37aabd00332944468cca
+```
 
 ## TODO
-- https://spring.io/guides/gs/accessing-mongodb-data-rest/
 - https://spring.io/guides/gs/spring-boot-docker/
 - https://spring.io/guides/gs/centralized-configuration/
 - https://spring.io/guides/gs/routing-and-filtering/
